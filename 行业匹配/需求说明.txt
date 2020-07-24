@@ -1,0 +1,31 @@
+要求：匹配出公司的行业大类
+
+口径：行业大类
+alter table xxx add hy_dl varchar(50) null;commit;
+update xxx a
+set a.hy_dl=c.industry_type_name
+from bssdev.ecust_gz_mo_ccust b,bssdev.industry_type c
+where a.cust_name=b.ccust_name
+and convert(int,b.way_type_dl)=c.industry_type_id;commit;
+
+导数脚本：
+----数据导入
+drop table if exists xxxx ;commit;
+create table xxxx (
+cust_name varchar(120),
+);
+commit;
+
+truncate table xxxx ;commit;
+LOAD TABLE kk_temp(
+cust_name        '\x0a')   
+USING CLIENT FILE 'X:\----.txt' 
+QUOTES OFF
+ESCAPES OFF
+WITH CHECKPOINT ON;
+COMMIT; 
+---清除无用符号
+update xxxx set cust_name = replace(cust_name,CHAR(9),'');
+update xxxx set cust_name = replace(cust_name,CHAR(10),'');
+update xxx set cust_name = replace(cust_name,CHAR(13),'');
+commit;
