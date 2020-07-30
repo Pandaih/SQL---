@@ -9,21 +9,20 @@ select month_id,serv_id,acc_nbr,prod_id,GRID_SUBST_NAME,GRID_BRANCH_NAME,
  group by month_id,serv_id,acc_nbr,prod_id,GRID_SUBST_NAME,GRID_BRANCH_NAME,GRID_BRANCH_NAME
 
 
-alter table hjj_temp_20200716 add (custgrp_code varchar(50),serv_grp_type varchar(10), cust_nbr varchar(30) ,cust_name varchar(160));commit;
+alter table hjj_temp_20200716 add (custgrp_code varchar(50),serv_grp_type varchar(10), cust_nbr varchar(30) ,
+cust_name varchar(160), divide_market_dl varchar(30));commit;
 
 update hjj_temp_20200716 a
    set a.custgrp_code = b.cust_code,
        a.serv_grp_type = b.serv_grp_type,
        a.cust_nbr = b.cust_nbr,
-       a.cust_name = b.cust_name
+       a.cust_name = b.cust_name,
+       a.divide_market_dl=b.six_market
   from rptdev.rpt_comm_cm_serv_union b  --用户资料信息表
  where a.serv_id = b.serv_id
    and a.month_id =202006
    and b.month_id =202006
 ;commit;
-
-alter table hjj_temp_20200716 add divide_market_dl varchar(30)
-
 
 alter table hjj_temp_20200716 add prod_number varchar(30) 
 update hjj_temp_20200716 a
@@ -34,12 +33,11 @@ set a.prod_number =case when prod_id in (48,57,2507,2508,2509) then 'IP专线'
                         when prod_id in (58,681,2301,2302,2311,2312,2313,2314,2315,2316,2317,3812,500001520,500002640) then 'IDC'
 else '-' end;
 commit;
+--剔除省校园标签为'是'的
  delete from hjj_temp_20200716 where serv_id in (select serv_id from  bssdev.tlcs_divide_market_new where IS_SCHOOL_MARKET_USER >0 );commit;
+--全部服务分群为政企的
+ delete from hjj_temp_20200716 where serv_grp_type <>'01';commit;
+--剔除六大细分市场为'行客市场'
+delete from hjj_temp_20200716 where divide_market_dl in ('行客市场');commit;
 
-select  * from hjj_temp_20200716 
- hjj_temp_20200716 where serv_grp_type='01' and prod_number <> '-'
-
-
-
-select * from hjj_temp_20200716 where serv_grp_type='01' and prod_number <> '-' and divide_market_dl is not null
 

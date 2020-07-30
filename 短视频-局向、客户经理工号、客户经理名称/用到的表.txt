@@ -1,0 +1,4 @@
+直销客户信息维表  ： bssdev.ecust_gz_mo_ccust 
+局向维表 ： bssdev.dim_subst  
+直销客户经理关系表 ： bssdev.grid_gz_ccust_rule 
+客户经理信息维表 ：bssdev.staff 

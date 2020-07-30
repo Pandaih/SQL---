@@ -1,0 +1,2 @@
+直销客户信息维表 ： bssdev.ecust_gz_mo_ccust
+行业类型表 ： bssdev.industry_type 

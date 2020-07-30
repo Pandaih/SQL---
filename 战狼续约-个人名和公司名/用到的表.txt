@@ -1,0 +1,4 @@
+套餐信息维表 ： bssdev.offer 
+优惠信息表： bssdev.rpt_comm_cm_msdisc
+用户资料表：bssdev.rpt_comm_cm_serv  
+优惠参数资料表 ：bssdev.rpt_comm_cm_msparam

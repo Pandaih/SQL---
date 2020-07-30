@@ -56,7 +56,7 @@ commit;
 update hjj_temp2_20200720 a
    set a.sales_man_name = b.sales_man_name,
        a.sales_man_subst = c.subst_name
-  from bssdev.sales_man b, bssdev.sale_outlers c   --b：揽装人信息表 c：揽装机构信息表
+  from bssdev.sales_man b, bssdev.sale_outlers c   --b：揽装人信息表 c：揽装机构信息表  统称：渠道统一视图
  where a.salestaff_id = b.sales_code
    and b.own_channel_id =c.channel_id;
 commit;
